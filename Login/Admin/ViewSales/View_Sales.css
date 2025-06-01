@@ -1,0 +1,159 @@
+body {
+  display: flex;
+  margin: 0;
+  font-family: "Lato", sans-serif;
+  transition: background-color .5s;
+  background: #f8f8f8;
+  height: 100vh;
+  min-height: fit-content;
+  overflow: visible;
+}
+
+.menu-title {
+  font-size: 24px;
+  padding: 20px;
+}
+
+/*Middle panel*/
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+}
+.search-section h2 {
+  margin-bottom: 10px;
+}
+.search-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.search-row input[type="text"] {
+  flex: 1;
+  padding: 8px;
+  border-radius: 25px;
+  border: 1px solid #ddd;
+}
+.dropdown {
+  position: relative;
+}
+.dropdown-toggle {
+  padding: 8px 12px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+}
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  list-style: none;
+  margin: 0;
+  padding: 5px 0;
+  display: none;
+  border: 1px solid #ccc;
+  z-index: 1000;
+}
+.dropdown-menu li {
+  padding: 5px 15px;
+  cursor: pointer;
+}
+.dropdown-menu li:hover {
+  background-color: #f0f0f0;
+}
+.product-grid {
+  min-height: max-content;
+  overflow: visible;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #ccc;
+  padding: 2px;
+  text-align: center;
+  word-break: break-word;
+}
+th {
+  font-size: 10pt;
+  background-color: darkgreen;
+  color: white;
+}
+
+/*Right Panel*/
+.right-block {
+  width: 150px;
+  background: #ffffff;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+}
+.sum-menu {
+  list-style: none;
+  padding: 0;
+}
+.sum-item {
+  padding: 15px 20px;
+}
+.sum-btn {
+  margin-top: auto;
+  background: darkgreen;
+  color: #ffffff;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  padding: 10px;
+}
+.sum-item-print {
+  margin-top: auto;
+  padding: 10px;
+}
+button:disabled, .disabled-print {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  border: 1px solid #aaa;
+  opacity: 0.5;
+}
+
+/* Printing preview */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printArea,
+  #printArea * {
+    visibility: visible;
+  }
+  #printArea {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 10mm;
+    box-sizing: border-box;
+  }
+  @page {
+    size: portrait;
+    margin: 10mm;
+  }
+  table {
+    font-size: 7pt;
+  }
+  #printArea table {
+    page-break-inside: auto;
+  }
+  #printArea tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+}

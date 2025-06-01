@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POS Admin — View Sales</title>
+    <link rel="stylesheet" href="View_Sales.css">
+    <link rel="stylesheet" href="sidenav.css">
+  </head>
+
+  <body>
+<div id="mySidenavko" class="sidenavko">
+    <a href="javascript:void(0)" class="closebtnko" onclick="closeNavko()">&times;</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/ManageProducts/manageinventory.html"> Manage Stocks</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/ViewInventory/viewinventoryadmin.html">View Inventory</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/ViewSales/View_Sales.html"> View Sales</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/ViewAnalytics/View_Analytics.html"> View Analytics</a>
+       <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/AddProduct/add_product.php"> Add Product</a>
+
+  <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login_codes/Login.html">Log Out</a>
+  </div>
+
+<div id="mainko">
+  <span style="font-size:30px;cursor:pointer" onclick="openNavko()">&#9776; XYX Admin</span>
+  <div id="saleko">
+    <!-- 
+  Main Content : 
+    - Filter is now dropdown Year▼, Month▼ (optional, requires Year▼ first), and Year▼ (optional, requires Year▼ and Month▼ first), and Category▼
+    - Search bar can be used to view specific product sales briefly (table rests to applied filters)
+    - You need to enter a year first before printing a Sales Report
+  -->
+    <div class="content">
+      <div class="search-section">
+        <h2>Sales List</h2>
+        <div class="search-row">
+          <div class="dropdown">
+            <button
+                id="yearDropdownBtn"  class="dropdown-toggle"   onclick="toggleDropdown('yearDropdownList')">
+                    Year ▼
+            </button>
+                    <ul id="yearDropdownList" class="dropdown-menu"></ul>
+          </div>
+          <div class="dropdown">
+            <button
+                id="monthDropdownBtn"  class="dropdown-toggle"  onclick="toggleDropdown('monthDropdownList')">
+                    Month ▼
+            </button>
+                    <ul id='monthDropdownList' class="dropdown-menu"></ul>
+          </div>
+          <div class="dropdown">
+            <button
+                id="weekDropdownBtn"  class="dropdown-toggle"  onclick="toggleDropdown('weekDropdownList')">
+                    Week ▼
+            </button>
+                    <ul id='weekDropdownList' class="dropdown-menu"></ul>
+          </div>
+          <div class="dropdown">
+            <button
+                id="categoryDropdownBtn"  class="dropdown-toggle" onclick="toggleDropdown('categoryDropdownList')">
+                    Categories ▼
+            </button>
+                    <ul class="dropdown-menu" id="categoryDropdownList"></ul>
+          </div>
+          <input type="text" id="searchBox" placeholder="Search products..." />
+        </div>
+      </div>
+
+      <div class="product-grid">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Total</th>
+              <th>Category</th>
+              <th>Compatibility</th>
+              <th>Discount</th>
+              <th>Colors</th>
+              <th>Addon</th>
+            </tr>
+          </thead>
+          <tbody id="productGrid"></tbody>
+        </table>
+        <div id="errorMessage" style="color: red; margin-top: 10px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    <!-- 
+  Right Summary :
+    - Summary at a glance, all are presented in the printble version of the sales report
+    - Print button only works if year is specified (unfeasible to print all sales records of all time)
+    - printable sales record has the table, summary and indicates the specified filters
+  -->
+
+    <div class="right-block">
+      <div class="menu-title">Summary</div>
+      <ul class="sum-menu">
+        <li class="sum-item">
+          <b>Total Items Sold:</b> <span id="ItemsSold">n/a</span>
+        </li>
+        <li class="sum-item">
+          <b>Total Revenue:</b> ₱<span id="Revenue">00.00</span>
+        </li>
+        <li class="sum-item">
+          <b>Estimated Discounted Sales Total :</b> ₱<span id="EstimatedSales"
+            >00.00</span
+          >
+        </li>
+        <li class="sum-item">
+          <b>Estimated Final Sales w/ 12% VAT:</b> ₱<span id="FinalSales"
+            >00.00</span
+          >
+        </li>
+      </ul>
+      <div class="sum-item-print">
+        <button id="printButton" class="sum-btn" onclick="printSalesReport()">
+          Print Sales Report
+        </button>
+          <p id="printHelpText" style="color: red; font-size: 0.9rem; display: none; margin-top: 4px;">
+            *Please select a year first
+          </p>
+      </div>
+    </div>
+
+    <!--
+    Print Area Preview
+    -->
+    <div id="printArea" class="print-area" style="display: none"></div>
+  
+    <script src="sidenav.js" defer></script>
+    <script src="View_Sales.js" defer></script>
+  </body>
+
+
+</html>
