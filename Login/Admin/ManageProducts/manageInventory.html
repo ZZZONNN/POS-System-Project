@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>POS Admin - Manage Inventory</title>
+  <link rel="stylesheet" href="manageInventory.css">  
+  <script src="https://kit.fontawesome.com/8d4aa24ab3.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- New Sidebar Navigation -->
+  <div id="mySidenavko" class="sidenavko">
+    <a href="javascript:void(0)" class="closebtnko" onclick="closeNavko()">&times;</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/ManageProducts/manageinventory.html"> Manage Stocks</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/ViewInventory/viewinventoryadmin.html">View Inventory</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/ViewSales/View_Sales.html"> View Sales</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/ViewAnalytics/View_Analytics.html"> View Analytics</a>
+       <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/AddProduct/add_product.php"> Add Product</a>
+
+  <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login_codes/Login.html">Log Out</a>
+  </div>
+
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <div id="mainko">
+    <span style="font-size:30px;cursor:pointer" onclick="openNavko()">&#9776; XYX POS</span>
+  </div>
+
+  <div class="container">
+    <!-- Middle Column - Main -->
+    <div class="main">
+      <div class="title-bar">
+        <h2>Search Product</h2>      
+      </div>
+
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Type to search...">
+        <select id="category-filter">
+          <option value="all">All Categories</option>  
+          <option value="Button">Button</option>
+          <option value="Cable">Cable</option>
+          <option value="Charger">Charger</option>
+          <option value="Housing">Housing</option>
+          <option value="Lens Protector">Lens Protector</option>
+          <option value="LCD">LCD</option>
+          <option value="Organizer">Organizer</option>
+          <option value="Phone Case">Phone Case</option>
+          <option value="Tempered Glass">Tempered Glass</option>
+        </select>
+      </div>
+
+      <div class="product-grid">
+        <!-- Products will be dynamically inserted here by JavaScript -->
+      </div>
+    </div>
+
+        <!-- Right Column - Summary -->
+    <div class="summary">
+      <div>
+        <h2>Item Summary</h2>
+        <div class="cart-item" id="product-summary">
+          <div class="no-selection">Click on a product to view details</div>
+          <form id="product-form" style="display: none;">
+            <div class="form-group">
+              <label>Name:</label>
+              <input type="text" id="edit-name" required>
+            </div>
+            <div class="form-group">
+              <label>Compatibility:</label>
+              <input type="text" id="edit-compatibility">
+            </div>
+            <div class="form-group">
+              <label>Price (₱):</label>
+              <input type="number" id="edit-price" min="0" step="0.01" required>
+            </div>
+            <div class="form-group">
+              <label>Stock:</label>
+              <div class="quantity">
+                <button type="button" class="stock-btn increase">▲</button>
+                <input type="number" id="edit-stock" min="0">
+                <button type="button" class="stock-btn decrease">▼</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Category:</label>
+              <select id="edit-category">
+                <option value="Button">Button</option>
+                <option value="Cable">Cable</option>
+                <option value="Charger">Charger</option>
+                <option value="Housing">Housing</option>
+                <option value="Lens Protector">Lens Protector</option>
+                <option value="LCD">LCD</option>
+                <option value="Organizer">Organizer</option>
+                <option value="Phone Case">Phone Case</option>
+                <option value="Tempered Glass">Tempered Glass</option>
+              </select>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="save-btn">Save Changes</button>
+              <button type="button" class="cancel-btn">Cancel</button>
+            </div>
+          </form>
+        </div>
+        <button class="delete-btn" id="delete-product" style="display: none;">Delete Item</button>
+      </div>
+      
+      <button class="low-stock-btn" id="toggle-low-stock">
+          <h3>Low Stock Items <i class="fas fa-caret-down"></i></h3>
+      </button>
+
+      <!-- Low Stock Popup -->
+      <div class="low-stock-popup" id="low-stock-popup">
+        <div class="popup-header">
+          <h3><i class="fas fa-exclamation-triangle"></i> Stock Alerts</h3>
+          <button class="close-popup" id="close-low-stock">&times;</button>
+        </div>
+        <div class="popup-content">
+          <ul id="low-stock-list">
+            <!-- Items populated by JS -->
+          </ul>
+        </div>
+      </div>
+      <div class="popup-overlay" id="popup-overlay"></div>
+    </div>
+  </div>
+
+  <script src="manageInventory.js"></script>
+</body>
+</html>
