@@ -1,0 +1,319 @@
+/* sidenav ko */
+.navbar {
+  float: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Ensure chart containers have dimensions */
+.invleftchartdiv, 
+.invrightchartdiv, 
+.saleschartdiv, 
+.unitchartdiv {
+  position: relative;
+  height: 300px;
+  width: 250px;
+}
+
+td:empty::before {
+    content: "-";
+    color: #999;
+}
+
+/* Error message styling */
+.error-message {
+  background-color: #ffebee;
+  border: 1px solid #ef9a9a;
+  border-radius: 4px;
+  padding: 15px;
+  margin: 10px 0;
+  color: #c62828;
+}
+
+.sidenavko {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenavko a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenavko a:hover {
+  color: #f1f1f1;
+}
+
+.sidenavko .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#mainko {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenavko {padding-top: 15px;}
+  .sidenavko a {font-size: 18px;}
+}
+
+body {
+  display: flex;
+  margin: 0;
+  font-family: sans-serif;
+  background: #f8f8f8;
+  overflow: scroll;
+  font-family: "Lato", sans-serif;
+  transition: background-color .5s;
+}
+
+.main {
+  flex: 80%;
+}
+
+.left-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.right-block {
+  width: 20%;
+  background: inherit;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-title {
+  font-size: 24px;
+  padding: 20px;
+}
+
+/*Left Panel*/
+.logoutko {
+  align-self: flex-end;
+  margin-top: auto;
+  background: #111;
+  padding: 15px 20px;
+  cursor: pointer;
+}
+
+/*Middle panel*/
+.content {
+  flex: 100%;
+  padding: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.tab {
+  border: 1px solid #ccc;
+  background-color: #1e1e1e;
+}
+
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+.tab button:hover {
+  background-color: #ddd;
+  font-weight: bold;
+  color: #000000;
+}
+
+.tab button.active {
+  background-color: #ccc;
+  font-weight: bolder;
+  color: #000000;
+}
+
+.tabbutton {
+  display: block;
+  color: #ffffff;
+}
+
+.tabcontent {
+  display: none;
+  background-color: inherit;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+  animation: fadeEffect 1s;
+}
+
+#inventorytab {
+  width: 100%;
+  max-width: 1020px;
+}
+
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.tabsection {
+  display: flex;
+  flex-direction: row;
+  flex: 100%;
+}
+
+.sectionleft {
+  flex: 70%;
+}
+
+.sectionright {
+  flex: 30%;
+}
+
+.subsectop {
+  flex: 50%;
+  flex-direction: column;
+}
+
+.subsecbot {
+  flex: 50%;
+  flex-direction: column;
+}
+
+.drop {
+  margin: 5px;
+  justify-content: space-evenly;
+}
+
+.invleftchartdiv {
+  margin-right: 10px;
+  margin-bottom: 2px; 
+  background: inherit; 
+  padding: 20px; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.invrightchartdiv {
+  margin-bottom: 5px; 
+  background: inherit; 
+  padding: 10px; 
+  border-radius: 5px; 
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.saleschartdiv {
+  background: inherit; 
+  padding: 10px; 
+  border-radius: 5px; 
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.unitchartdiv {
+  background: inherit;
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin-bottom: 10px;
+}
+
+.analyticscontent {
+  background: inherit;
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin-bottom: 10px;
+}
+
+/* Table specific styles */
+#overviewtab {
+  overflow-x: auto;
+  width: 100%;
+}
+
+#overviewtab table {
+  width: 100%;
+  min-width: 800px;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+#overviewtab th {
+  background-color: #2c3e50;
+  color: white;
+  padding: 8px 12px;
+  text-align: left;
+  position: sticky;
+  top: 0;
+}
+
+#overviewtab td {
+  padding: 6px 12px;
+  border-bottom: 1px solid #ddd;
+  vertical-align: top;
+}
+
+#overviewtab tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+#overviewtab tr:hover {
+  background-color: #e9ecef;
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
+  #overviewtab {
+    display: block;
+  }
+  
+  #overviewtab table {
+    font-size: 11px;
+  }
+  
+  #overviewtab th, 
+  #overviewtab td {
+    padding: 4px 8px;
+  }
+}
+
+/* Loading indicator */
+.loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(0,0,0,.3);
+  border-radius: 50%;
+  border-top-color: #000;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

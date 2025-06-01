@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POS Admin — View Analytics</title>
+    <link rel="stylesheet" href="View_Analytics.css">
+    <script src="View_Analytics.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body>
+    <!-- Left Nav -->
+    <div class="left-block">
+    <div class="navbar">
+   <div id="mySidenavko" class="sidenavko">
+    <a href="javascript:void(0)" class="closebtnko" onclick="closeNavko()">&times;</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/ManageProducts/manageinventory.html"> Manage Stocks</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/ViewInventory/viewinventoryadmin.html">View Inventory</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/ViewSales/View_Sales.html"> View Sales</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/ViewAnalytics/View_Analytics.html"> View Analytics</a>
+       <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/AddProduct/add_product.php"> Add Product</a>
+
+  <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login_codes/Login.html">Log Out</a>
+  </div>
+    </div>
+
+    <div id="mainko">
+      <span style="font-size:30px;cursor:pointer" onclick="openNavko()">&#9776; XYX POS</span>
+    </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+    <div class="content">
+      <div class="title-bar">
+        <h2>Analytics</h2>
+      </div>
+
+    <!-- TAB BUTTONS -->
+      <div class="tab">
+        <button class="tabbutton" onclick="openChart(event, 'overviewtab')" id="defaultOpen">Overview</button>
+        <button class="tabbutton" onclick="openChart(event, 'inventorytab')">Inventory</button>
+        <button class="tabbutton" onclick="openChart(event, 'salestab')">Sales</button>
+      </div>
+
+    <!-- Tab contents -->
+    <!-- INVENTORY TAB -->
+    <div id='overviewtab' class="tabcontent">
+  <div class="tabsection">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th>Category</th>
+          <th>Compatibility</th>
+          <th>Discount</th>
+          <th>Color</th>
+          <th>Add On</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Data will be inserted here by JavaScript -->
+      </tbody>
+    </table>
+  </div>    
+</div>
+
+    <!-- INVENTORY TAB -->
+      <div id='inventorytab' class="tabcontent">
+        <div class="tabsection">
+          <div class="sectionleft">
+            <div class="drop">
+              <div class="invleftchartdiv">
+                <h3>Stocks per Category</h3>
+                <canvas id="inventoryChart"></canvas>
+              </div>
+            </div>
+
+            <div class="tabsection">
+              <div class="subsectop">
+                <div class="drop">
+                  <div class="invrightchartdiv">
+                    <h4>Samsung Stocks</h4>
+                    <canvas id="samsungChart"></canvas>
+                  </div>
+                </div>
+              </div>
+
+              <div class="subsectop">
+                <div class="drop">
+                  <div class="invrightchartdiv">
+                    <h4>Other Stocks</h4>
+                    <canvas id="otherChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tabsection">
+              <div class="subsecbot">
+                <div class="drop">
+                  <div class="invrightchartdiv">
+                    <h4>Inventory Capacity</h4>
+                    <canvas id="capacityChart" style="max-height: 65%"></canvas>
+                  </div>
+                </div>
+              </div>
+
+              <div class="subsecbot">
+                <div class="drop">
+                  <div class="invrightchartdiv">
+                    <h4>Stocks per Day</h4>
+                    <canvas id="restockChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sectionright">
+            <div class="drop">
+              <div class="invrightchartdiv">
+                <h4>iPhone Stocks</h4>
+                <canvas id="iphoneChart"></canvas>
+              </div>
+            </div>
+
+            <div class="drop">
+              <div class="invrightchartdiv">
+                <h4>Oppo Stocks</h4>
+                <canvas id="oppoChart"></canvas>
+              </div>
+            </div>
+
+            <div class="drop">
+              <div class="invrightchartdiv">
+                <h4>Vivo Stocks</h4>
+                <canvas id="vivoChart"></canvas>
+              </div>
+            </div>
+
+            <div class="drop">
+              <div class="invrightchartdiv">
+                <h4>Huawei Stocks</h4>
+                <canvas id="huaweiChart"></canvas>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <!-- SALES TAB -->
+      <div id='salestab' class="tabcontent">
+        <div class="tabsection">
+          <div class="sectionleft">
+            <div class="drop">
+              <div class="saleschartdiv">
+                <h3>Weekly Sales Overview</h3>
+                <canvas id="weeksalesChart"></canvas>
+              </div>
+            </div>
+
+            <div class="drop">
+              <div class="saleschartdiv">
+                <h3>Brand Sales Overview</h3>
+                <canvas id="brandsalesChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="sectionright">
+            <div class="drop">
+              <div class="saleschartdiv">
+                <h4>Monthly Sales Overview</h4>
+                <canvas id="monthsalesChart"></canvas>
+              </div>
+            </div>
+
+            <div class="drop">
+              <div class="saleschartdiv">
+                <h4>Yearly Sales Overview</h4>
+                <canvas id="yearsalesChart"></canvas>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+    <!-- Right Summary -->
+
+    <div class="right-block">
+      <div class="menu-title">Summary</div>
+        <div class="unitchartdiv">
+            <h3>Units Sold</h3>
+            <canvas id="unitChart"></canvas>
+        </div>
+      </div>
+  </div>
+  </div>
+  <script src="View_Analytics.js"></script>
+  </body> 
+</html>
