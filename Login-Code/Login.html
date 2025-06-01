@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f0f2f5;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-container {
+      background-color: white;
+      padding: 30px 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333;
+    }
+
+    input[type=text], input[type=password] {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .radio-group {
+      margin-bottom: 20px;
+    }
+
+    .radio-group label {
+      margin-right: 15px;
+    }
+
+    button[type=submit] {
+      width: 100%;
+      background-color: #242e2a;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button[type=submit]:hover {
+      background-color: #039e62;
+    }
+
+    .footer {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .footer a {
+      color: #242e2a;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .signup-link {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .signup-link a {
+      color: #242e2a;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .signup-link a:hover {
+      text-decoration: underline;
+      color: #039e62;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="loginForm" class="login-container" action="login.php" method="post">
+    <h2>Login</h2>
+    
+    <label for="uname"><b>Username</b></label>
+    <input type="text" name="uname" id="uname" placeholder="Enter Username" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" name="psw" id="psw" placeholder="Enter Password" required>
+
+    <button type="submit">Login</button>
+
+    <div class="footer">
+      <a href="#">Forgot password?</a>
+    </div>
+
+    <div class="signup-link">
+      Don't have an account? <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login_codes/Signup.html" id="signupLink">Sign up</a>
+    </div>
+  </form>
+
+  <!-- Remove or modify the script section to this: -->
+<script>
+    // Function to redirect to the signup page
+    function redirectToSignup() {
+        window.location.href = "http://localhost/XYX%20Repair%20Shop%20POS%20System/Login_codes/Signup.html";
+    }
+
+    // Display error message if login failed
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('error')) {
+        alert('Invalid username or password. Please try again.');
+    }
+</script>
+
+</body>
+</html>
