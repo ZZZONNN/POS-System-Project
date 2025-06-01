@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inventory Dashboard</title>
+  <link rel="stylesheet" href="viewinventoryadmin.css" />
+  <style>
+    .low-stock-summary {
+      overflow-y: auto;
+      max-height: calc(100vh - 160px);
+      padding-right: 10px;
+    }
+    .low-stock-summary ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .low-stock-summary li {
+      padding: 8px 0;
+      border-bottom: 1px solid #ddd;
+    }
+    .product-card.low-stock {
+      border-color: #e74c3c;
+    }
+    .low-stock-summary li.out {
+      color: red;
+      font-weight: bold;
+    }
+    .low-stock-summary li.low {
+      color: black;
+      font-weight: bold;
+    }
+    .sidenavko {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      padding-top: 60px;
+      transition: 0.5s;
+    }
+    .sidenavko a {
+      padding: 10px 32px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #f1f1f1;
+      display: block;
+      transition: 0.3s;
+    }
+    .sidenavko a:hover {
+      background-color: #575757;
+    }
+    .logout-link {
+      padding: 10px;
+  background-color: #232323;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  color: white;
+  margin-top: auto;
+    }
+    .receipt-modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border: 1px solid #ccc;
+      padding: 20px;
+      max-width: 400px;
+      width: 80%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    .receipt-modal h4 {
+      margin-top: 0;
+    }
+    .receipt-modal ul {
+      padding-left: 20px;
+    }
+    .receipt-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 9;
+    }
+    .close-receipt {
+      float: right;
+      cursor: pointer;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar Navigation -->
+  <div id="mySidenavko" class="sidenavko">
+    <a href="javascript:void(0)" class="closebtnko" onclick="closeNavko()">&times;</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/ManageProducts/manageinventory.html"> Manage Stocks</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/ViewInventory/viewinventoryadmin.html">View Inventory</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/ViewSales/View_Sales.html"> View Sales</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/ViewAnalytics/View_Analytics.html"> View Analytics</a>
+       <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/admin/AddProduct/add_product.php"> Add Product</a>
+
+  <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login_codes/Login.html">Log Out</a>
+  </div>
+
+  <div id="mainko">
+    <span style="font-size:30px;cursor:pointer" onclick="openNavko()">&#9776; XYX POS</span>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <h2>Inventory List</h2>
+
+    <div class="search-filter-container">
+      <input type="text" id="searchInput" placeholder="Search products..." />
+      <select id="categoryFilter">
+        <option value="">All Categories</option>
+      </select>
+    </div>
+
+    <div class="product-grid" id="productGrid">
+  <!-- Placeholder Items -->
+  
+</div>
+
+  </div>
+
+  <!-- Right Sidebar -->
+  <div class="right-block">
+  <div class="right-content">
+    <h3>Low Stock Items</h3>
+    <div class="low-stock-summary">
+      <ul id="lowStockList"></ul> <!-- This is crucial -->
+    </div>
+    <button onclick="orderLowStocks()">Show All Low Stock Items</button>
+  </div>
+</div>
+
+  <!-- Receipt Modal -->
+  <!-- Receipt Modal -->
+<div class="receipt-overlay" id="receiptOverlay"></div>
+<div class="receipt-modal" id="receiptModal">
+  <span class="close-receipt" onclick="closeReceipt()">&times;</span>
+  <h4>Low Stock Items Report</h4>
+  <ul id="receiptList"></ul>
+  <button onclick="printReceipt()" style="
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  ">Print Report</button>
+</div>
+
+  <script src="viewinventoryadmin.js"></script>
+  <script>
+    function openNavko() {
+      document.getElementById("mySidenavko").style.width = "250px";
+      document.getElementById("mainko").style.marginLeft = "250px";
+    }
+
+    function closeNavko() {
+      document.getElementById("mySidenavko").style.width = "0";
+      document.getElementById("mainko").style.marginLeft = "0";
+    }
+
+    function orderLowStocks() {
+      const lowStockItems = Array.from(document.querySelectorAll('#lowStockList li'));
+      const receiptList = document.getElementById('receiptList');
+      const modal = document.getElementById('receiptModal');
+      const overlay = document.getElementById('receiptOverlay');
+
+      if (lowStockItems.length === 0) {
+        alert("No low stock items to order.");
+        return;
+      }
+
+      receiptList.innerHTML = '';
+      lowStockItems.forEach(item => {
+        const clone = item.cloneNode(true);
+        clone.textContent = "Low stock item: " + clone.textContent;
+        receiptList.appendChild(clone);
+      });
+
+      overlay.style.display = 'block';
+      modal.style.display = 'block';
+    }
+
+    function closeReceipt() {
+      document.getElementById('receiptModal').style.display = 'none';
+      document.getElementById('receiptOverlay').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
