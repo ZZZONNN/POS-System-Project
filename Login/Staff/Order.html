@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XYX POS</title>
+  <link rel="stylesheet" href="orderdesign.css">
+  <script src="https://kit.fontawesome.com/8d4aa24ab3.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- Collapsible Sidebar Navigation -->
+  <div id="mySidenavko" class="sidenavko">
+    <a href="javascript:void(0)" class="closebtnko" onclick="closeNavko()">&times;</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/Staff/POS/order.html"><i class="fa-solid fa-cash-register"></i> POS</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/Staff/POS/View_Products.html"><i class="fa-solid fa-boxes-stacked"></i> Inventory</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login_codes/Login.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+  </div>
+
+  <!-- Fixed Shopping Cart -->
+  <div class="cart-container">
+    <h2>Shopping Cart</h2>
+    <div class="cart-items" id="cartItems">
+    </div>
+    <div class="cart-summary">
+      <p><span id="itemCount">0</span> items <span>Subtotal: ₱<span id="subtotal">0.00</span></span></p>
+      <p>
+        <label><input type="checkbox" id="discountCheckbox"> Senior/PWD Discount</label>
+        <span>Discount: ₱<span id="discountAmount">0.00</span></span>
+      </p>
+      <p class="total">Total: <span>₱<span id="totalAmount">0.00</span></span></p>
+    </div>
+    <button class="checkout-btn" id="checkoutBtn">Payment →</button>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="main-container" id="mainContainer">
+    <div class="header-nav">
+      <span class="hamburger-menu" onclick="openNavko()">&#9776;</span>
+      <span class="shop-title">XYX Shop</span>
+    </div>
+    <div class="search-container">
+      <h1>Search Product</h1>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Type to search...">
+        <select id="categoryFilter">
+          <option value="">All Categories</option>
+          <option value="Huawei">Huawei</option>
+          <option value="Samsung">Samsung</option>
+          <option value="Oppo">Oppo</option>
+          <option value="Vivo">Vivo</option>
+          <option value="iPhone">iPhone</option>
+        </select>
+      </div>
+    </div>
+    <div class="product-grid-container">
+      <div class="product-grid" id="productGrid"></div>
+    </div>
+  </div>
+
+  <script>
+     function openNavko() {
+      document.getElementById("mySidenavko").style.width = "250px";
+      document.getElementById("mainContainer").style.marginLeft = "250px";
+      document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+    }
+
+    function closeNavko() {
+      document.getElementById("mySidenavko").style.width = "0";
+      document.getElementById("mainContainer").style.marginLeft = "0";
+      document.body.style.backgroundColor = "white";
+    }
+
+    // Sample product loading (replace with your actual implementation)
+    window.onload = function() {
+      // This would be replaced with your actual product loading logic
+      console.log("Page loaded");
+    };
+  </script>
+  <script src="pos_script.js"></script>
+</body>
+</html>

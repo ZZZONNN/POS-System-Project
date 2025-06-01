@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POS Layout — View Products</title>
+  <link rel="stylesheet" href="View_Products.css">
+</head>
+<body>
+
+  <!-- Sidenav (from sidenav.html) -->
+  <div id="mySidenavko" class="sidenavko">
+    <a href="javascryipt:void(0)" class="closebtn" onclick="closeNavko()">&times;</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/Staff/POS/order.html"><i class="fa-solid fa-cash-register"></i> POS</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login/Staff/POS/View_Products.html#"><i class="fa-solid fa-boxes-stacked"></i> Inventory</a>
+    <a href="http://localhost/XYX%20Repair%20Shop%20POS%20System/Login_codes/Login.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+  </div>
+  <div id="mainko">
+    <span style="font-size:30px;cursor:pointer" onclick="openNavko()">&#9776; XYX POS</span>
+    <!-- Main Content Wrapper moved inside mainko for alignment -->
+    <div class="content">
+      <div class="search-section">
+        <h2>Product List</h2>
+        <div class="search-row">
+          <input type="text" id="searchBox" placeholder="Search products..." />
+          <div class="dropdown">
+            <button class="dropdown-toggle">Categories ▼</button>
+            <ul class="dropdown-menu" id="categoryList"></ul>
+          </div>
+        </div>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+    </div>
+  </div>
+
+<script>
+// Global variable to store products
+let inventory = [];
+
+// DOM elements
+const productGrid = document.getElementById('productGrid');
+const searchBox = document.getElementById('searchBox');
+const dropdownToggle = document.querySelector('.dropdown-toggle');
+const dropdownMenu = document.querySelector('.dropdown-menu');
+
+// Fetch products from database
+async function fetchProducts() {
+  try {
+    const response = await fetch('get_inventory.php');
+    const data = await response.json();
+    
+    if (data.success) {
+      inventory = data.data;
+      renderCategories();
+      renderProducts();
+    } else {
+      console.error('Error fetching products:', data.error);
+      alert('Error loading inventory data. Please try again.');
+    }
+  } catch (error) {
+    console.error('Fetch error:', error);
+    alert('Network error. Please check your connection.');
+  }
+}
+
+function renderCategories() {
+  const categories = ["All", ...new Set(inventory.map(p => p.category))];
+  dropdownMenu.innerHTML = categories.map(cat => `<li onclick="filterByCategory('${cat}')">${cat}</li>`).join('');
+}
+
+function renderProducts(filter = "All", search = "") {
+  productGrid.innerHTML = '';
+  
+  inventory.forEach(product => {
+    if ((filter !== "All" && product.category !== filter) || 
+        !product.name.toLowerCase().includes(search.toLowerCase())) {
+      return;
+    }
+    
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    
+    // Use the stock_status from the API response
+    const stockClass = product.stock_status || 
+                      (product.Stocks > 5 ? 'in-stock' : 
+                       (product.Stocks > 0 ? 'low-stock' : 'out-of-stock'));
+    
+    card.innerHTML = `
+      <div class="product-name">${product.name}</div>
+      <div class="stock-info">
+        <span class="stock-label">STOCKS:</span>
+        <span class="stock-value ${stockClass}">${product.Stocks}</span>
+      </div>
+      <div class="product-details">
+        <div>Category: ${product.category}</div>
+        <div>Type: ${product.class}</div>
+      </div>
+    `;
+    
+    card.dataset.compatibility = product.compatibility || 'N/A';
+    card.dataset.class = product.class || 'N/A';
+    card.addEventListener('mouseenter', showTooltip);
+    card.addEventListener('mouseleave', hideTooltip);
+    productGrid.appendChild(card);
+  });
+}
+
+function showTooltip(e) {
+  const tooltip = document.createElement('div');
+  tooltip.className = 'tooltip';
+  
+  const productName = e.currentTarget.querySelector('.product-name').textContent;
+  const product = inventory.find(p => p.name === productName);
+  
+  if (!product) return;
+  
+  let tooltipContent = `Compatible with:\n${product.compatibility || 'N/A'}\n\n`;
+  tooltipContent += `Class: ${product.class || 'N/A'}\n`;
+  tooltipContent += `Colors: ${product.colors || 'N/A'}\n`;
+  
+  tooltip.textContent = tooltipContent;
+  document.body.appendChild(tooltip);
+  
+  const rect = e.currentTarget.getBoundingClientRect();
+  tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight - 10}px`;
+  tooltip.style.left = `${rect.left + window.scrollX}px`;
+  
+  const tooltipRect = tooltip.getBoundingClientRect();
+  if (tooltipRect.right > window.innerWidth) {
+    tooltip.style.left = `${window.innerWidth - tooltipRect.width - 10}px`;
+  }
+  if (tooltipRect.top < 0) {
+    tooltip.style.top = `${rect.bottom + window.scrollY + 10}px`;
+    tooltip.style.transform = 'translateY(0)';
+    tooltip.style.setProperty('--arrow-display', 'none');
+  }
+  
+  e.currentTarget._tooltip = tooltip;
+}
+
+function hideTooltip(e) {
+  if (e.currentTarget._tooltip) {
+    e.currentTarget._tooltip.remove();
+  }
+}
+
+function filterByCategory(cat) {
+  renderProducts(cat, searchBox.value);
+  dropdownMenu.style.display = 'none';
+}
+
+function openNavko() {
+  document.getElementById("mySidenavko").style.width = "250px";
+  document.getElementById("mainko").style.marginLeft = "250px";
+  document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+
+function closeNavko() {
+  document.getElementById("mySidenavko").style.width = "0";
+  document.getElementById("mainko").style.marginLeft= "0";
+  document.body.style.backgroundColor = "white";
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize by fetching products from database
+  fetchProducts();
+  
+  // Set up event listeners
+  searchBox.addEventListener('input', () => renderProducts("All", searchBox.value));
+  dropdownToggle.addEventListener('click', () => {
+    dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+  });
+  window.addEventListener('click', e => {
+    if (!e.target.closest('.dropdown')) {
+      dropdownMenu.style.display = 'none';
+    }
+  });
+});
+</script>
+</body>
+</html>
